@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Models\Forum;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\ForumResource;
 use App\Http\Resources\ForumCollection;
@@ -19,7 +20,13 @@ class ForumController extends BaseController
     public function index()
     {
         // $forums = Forum::all()->with('comments');
-        $forums = Forum::all();
+        $forums = Forum::orderBy('created_at', 'desc')
+            ->with([
+                'user:id,firstname,lastname,image', 
+                'forum_category:id,name', 
+                'comments.user:id,firstname,lastname,image'
+                ])
+            ->withCount('comments')->get();
 
 
         return $this->sendResponse(new ForumCollection($forums), 'Forums fetched');
@@ -37,9 +44,18 @@ class ForumController extends BaseController
 
         $validatedData = $request->validated();
 
-        $validatedData['user_id'] = Auth::user()->id;;
-        $validatedData['likes'] = 0;
-        $validatedData['comments'] = 0;
+        $image = '';
+
+        if ($request->file('image')) {
+            $image =  $request->file('image')->store('storage/forums', 'public');
+
+            $image = asset('public/' . $image);
+        }
+
+
+        $validatedData['user_id'] = Auth::user()->id;
+        $validatedData['slug'] = Str::slug($validatedData['title']);
+        $validatedData['image'] = $image;
 
         $forum = Forum::create($validatedData);
 
@@ -54,7 +70,16 @@ class ForumController extends BaseController
      */
     public function show(Forum $forum)
     {
-        //
+        $forum = Forum::where('id', $forum->id)->orderBy('created_at', 'desc')
+            ->with([
+                'user:id,firstname,lastname,image', 
+                'forum_category:id,name', 
+                'comments.user:id,firstname,lastname,image'
+                ])
+            ->withCount('comments')->get()->first();
+
+
+        return $this->sendResponse(new ForumResource($forum), 'Forums fetched');
     }
 
     /**

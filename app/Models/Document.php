@@ -13,7 +13,6 @@ class Document extends Model
         'user_id',
         'title',
         'document',
-        'document_type',
         'image'
     ];
 }

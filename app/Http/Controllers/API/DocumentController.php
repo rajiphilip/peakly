@@ -33,18 +33,19 @@ class DocumentController extends BaseController
      */
     public function store(StoreDocumentRequest $request)
     {
+        // https://stackoverflow.com/questions/42169126/laravel-not-storing-files-from-request
 
         $validatedData = $request->validated();
 
         $id = Auth::user()->id;
         $uploaded_document = $request->file('document')->store('documents', 'public');
+        $uploaded_document = asset('public/' . $uploaded_document);
 
-        $file_type = $request->document->extension();
         $image = $request->file('image')->store('document_images', 'public');
+        $image = asset('public/' . $image);
 
         $validatedData['user_id'] = $id;
         $validatedData['document'] = $uploaded_document;
-        $validatedData['document_type'] = $file_type;
         $validatedData['image'] = $image;
 
         $document = Document::create($validatedData);

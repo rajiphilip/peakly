@@ -13,7 +13,8 @@ class UpdateForumRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        $user = $this->user();
+        return $user != null;
     }
 
     /**

@@ -8,22 +8,35 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Forum extends Model
 {
+    use HasFactory;
+
     protected $fillable  = [
         'title',
-        'description',
+        'body',
+        'slug',
         'forum_category_id',
         'user_id',
-        'likes',
-        'comments'
+        'image'
     ];
 
-    public function category()
+    public function forum_category()
     {
-        $this->belongsTo(ForumCategory::class);
+       return $this->belongsTo(ForumCategory::class);
+    }
+
+    public function user()
+    {
+       return $this->belongsTo(User::class);
     }
 
     public function comments()
     {
-        $this->hasMany(Comment::class);
+       return $this->hasMany(Comment::class);
     }
+
+    // public function posts()
+    // {
+    //    return $this->hasMany(Comment::class);
+    // }
+
 }

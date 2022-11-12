@@ -15,12 +15,12 @@ return new class extends Migration
     {
         Schema::create('forums', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
-            $table->foreignId('forum_category_id');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('forum_category_id');
             $table->string('title');
-            $table->text('description');
-            $table->integer('likes');
-            $table->integer('no_of_comments');
+            $table->string('slug');
+            $table->text('body');
+            $table->string('image');
             $table->timestamps();
         });
     }

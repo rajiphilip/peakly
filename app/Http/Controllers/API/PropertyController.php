@@ -19,9 +19,10 @@ class PropertyController extends BaseController
      */
     public function index()
     {
-        //$properties = Property::all()->with('images');
+        $properties =  Property::orderBy('created_at', 'desc')
+        ->with('images:id,property_id,image')->get();
 
-        $properties = Property::paginate();
+        //$properties = Property::paginate()->with('images');
 
         return $this->sendResponse(new PropertyCollection($properties), 'Properties fetched');
     }
@@ -86,7 +87,9 @@ class PropertyController extends BaseController
      */
     public function show(Property $property)
     {
-        //
+        $property = Property::where('id', $property->id)->with('images:id,property_id,image')->get()->first();
+
+        return $this->sendResponse(new PropertyResource($property), 'Property fetched');
     }
 
 

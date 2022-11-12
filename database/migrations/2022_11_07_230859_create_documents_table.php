@@ -15,10 +15,9 @@ return new class extends Migration
     {
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
+            $table->unsignedBigInteger('user_id');
             $table->string('title');
             $table->string('document');
-            $table->string('document_type');
             $table->string('image');
             $table->timestamps();
         });

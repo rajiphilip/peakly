@@ -26,7 +26,7 @@ class StoreForumRequest extends FormRequest
     {
         return [
             'title' => ['required'],
-            'description' => ['required'],
+            'body' => ['required'],
             'forum_category_id' => ['required', 'numeric'],
         ];
     }

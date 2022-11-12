@@ -3,12 +3,13 @@
 namespace Database\Factories;
 
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ForumCaterory>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ForumLike>
  */
-class ForumCategoryFactory extends Factory
+class CommentLikeFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +19,8 @@ class ForumCategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->company(),
             'user_id' => User::get()->random()->id,
+            'comment_id' => Comment::get()->random()->id,
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,10 @@ class DocumentFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => User::get()->random()->id,
+            'title' => $this->faker->company(),
+            'document' => $this->faker->imageUrl(),
+            'image' => $this->faker->imageUrl(),
         ];
     }
 }

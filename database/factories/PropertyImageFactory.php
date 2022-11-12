@@ -2,13 +2,13 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
+use App\Models\Property;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\ForumCaterory>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\PropertyImage>
  */
-class ForumCategoryFactory extends Factory
+class PropertyImageFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -18,8 +18,8 @@ class ForumCategoryFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->company(),
-            'user_id' => User::get()->random()->id,
+            'property_id' => Property::get()->random()->id,
+            'image' => $this->faker->imageUrl(),
         ];
     }
 }

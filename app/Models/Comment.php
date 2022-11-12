@@ -13,12 +13,26 @@ class Comment extends Model
         'user_id',
         'forum_id',
         'comment',
-        'likes',
-        'no_of_comments'
+        'image',
     ];
 
-    public function images()
+    public function forum()
     {
         return $this->belongsTo(Forum::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function shares()
+    {
+        return $this->hasMany(CommentShare::class);
+    }
+
+    public function likes()
+    {
+        return $this->hasMany(CommentLike::class);
     }
 }
